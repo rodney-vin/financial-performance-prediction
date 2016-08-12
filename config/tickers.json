@@ -1,0 +1,15 @@
+{
+  "yahoo": {
+    "AMZN":"Amazon.com, Inc.",
+    "FB": "Facebook, Inc.",
+    "JNJ": "Johnson & Johnson",
+    "SBUX": "Starbucks Corporation",
+    "V": "Visa Inc.",
+    "NKE": "NIKE, Inc."
+  },
+  "fred": {
+    "RGDPMRPUKM": "Real Gross Domestic Product at Market Prices in the United Kingdom",
+    "CPIAUCSL": "Consumer Price Index for All Urban Consumers",
+    "INDPRO": "Industrial Production Index"
+  }
+}

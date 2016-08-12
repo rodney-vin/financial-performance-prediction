@@ -1,0 +1,12 @@
+{
+  "logDirectory": "log",
+  "fileName": "financialTS",
+  "morgan": {
+    "loggingType": "combined"
+  },
+  "log4js": {
+    "level": "ALL",
+    "maxLogSize": 200000,
+    "backups": 10
+  }
+}
