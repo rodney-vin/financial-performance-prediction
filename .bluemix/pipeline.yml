@@ -28,11 +28,11 @@ stages:
     script: |-
       #!/bin/bash
       echo appName "${CF_APP}"
-      serviceId=`echo ${CF_APP} | awk '{print substr($0, 12)}'`
+      serviceId=`echo ${CF_APP} | tail -c 37`
       echo serviceId "${serviceId}"
       serviceJson=`cf curl /v2/service_instances/${serviceId}`
       echo serviceJson "${serviceJson}"
-      errorCode=`echo ${serviceJson} | grep -Po '(?<="error_code": ")[^"]*' || true` 
+      errorCode=`echo ${serviceJson} | grep -Po '(?<="error_code": ")[^"]*' || true`
       echo errorCode ${errorCode}
       if [[ -z $errorCode ]]
       then
@@ -45,7 +45,7 @@ stages:
         sed -i "$ a \  - financial-performance-prediction-dashDB" manifest.yml
        else
          echo "The problem occured when retrieving the serviceName. The service will not be bind to the app."
-       fi 
+       fi
       else
         echo "The problem occured when retrieving the serviceName. The service will not be bind to the app."
       fi
