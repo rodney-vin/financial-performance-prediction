@@ -49,7 +49,7 @@ describe(`${id}`, () => {
   before(function (done) {
     this.timeout(5000);
     testPAService.uploadModel(id, path.join(`${topDir}`,
-        '/test/test-utils/test_stream.str'), function (err, res) {
+        '/test/test-utils/testStream.str'), function (err, res) {
           expect(err).to.equal(null);
           done();
         });
@@ -104,7 +104,7 @@ describe(`${id}`, () => {
   });
 
   it(`${id} result`, (done) => {
-    testPAService.createJob('TRAINING', jobId, modelId, 'modelName', 'inputmetadata.csv', function (err, res) {
+    testPAService.createJob('TRAINING', jobId, modelId, 'modelName', 'FORECAST_DATA', 'inputmetadata.csv', function (err, res) {
       expect(err).to.equal(null);
       done();
     });

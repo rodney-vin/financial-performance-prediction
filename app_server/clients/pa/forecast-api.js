@@ -7,6 +7,7 @@ var request = require('request');
 var pa2json = require('../../utils/pa2json-util');
 var dashDBClient = require('../dashDB-client');
 var fs = require('fs');
+var uuid = require('node-uuid');
 
 let paClient = new PAClient(_getPMEnvironment());
 
@@ -43,9 +44,9 @@ function _waitForBatchJobToFinish(jobId, callback) {
   }, 2000);
 }
 
-function _doJob(action, jobId, fileId, fileName, inputsTable, callback) {
-  logger.enter('_doJob()', {jobId: jobId, fileId: fileId, fileName: fileName, inputsTable: inputsTable});
-  paClient.createJob(action, jobId, fileId, fileName, inputsTable, function (error, data) {
+function _doJob(action, jobId, fileId, fileName, tableName, inputsTable, callback) {
+  logger.enter('_doJob()', {jobId: jobId, fileId: fileId, fileName: fileName, tableName: tableName, inputsTable: inputsTable});
+  paClient.createJob(action, jobId, fileId, fileName, tableName, inputsTable, function (error, data) {
     if (error !== null) {
       logger.error(error);
       return callback(error);
@@ -231,15 +232,18 @@ function _clean(basicModelFileId, trainedModelFileId, trainingJobId, scoringJobI
 
 function _run(data, modelId, sendMessage, callback) {
   logger.enter('_run()');
-  var basicModelFileId = 'basicModelFileId';
+
+  var uniqueId = uuid.v4();
+
+  var basicModelFileId = 'basicModelFileId_' + uniqueId;
   var basicModelFilePath = 'app_server/models/downloaded.str';
 
-  var trainedModelFileId = 'trainedModelFileId';
+  var trainedModelFileId = 'trainedModelFileId_' + uniqueId;
   var trainedModelFilePath = 'app_server/models/trained.str';
 
-  var trainingJobId = 'training_job_id';
-  var scoringJobId = 'scoring_job_id';
-  var tableName = 'FORECAST_DATA';
+  var trainingJobId = 'training_job_id_' + uniqueId;
+  var scoringJobId = 'scoring_job_id_ ' + uniqueId;
+  var tableName = 'FORECAST_DATA_' + uniqueId.toUpperCase().split('-').join('_');
 
   var trainedModelDownloadId = '';
   var scoringDataDownloadId = '';
@@ -252,7 +256,7 @@ function _run(data, modelId, sendMessage, callback) {
       return callback([error]);
     } else {
       sendMessage('Training model');
-      _doJob('TRAINING', trainingJobId, basicModelFileId, 'tsfinalout.str', 'in', function (error, status) {
+      _doJob('TRAINING', trainingJobId, basicModelFileId, 'tsfinalout.str', tableName, 'in', function (error, status) {
         if (error) {
           logger.error(error);
           return callback([error]);
@@ -265,7 +269,7 @@ function _run(data, modelId, sendMessage, callback) {
               return callback([error]);
             } else {
               sendMessage('Forecasting');
-              _doJob('BATCH_SCORE', scoringJobId, trainedModelFileId, 'tsfinalout.str', tableName, function (error, status) {
+              _doJob('BATCH_SCORE', scoringJobId, trainedModelFileId, 'tsfinalout.str', tableName, tableName, function (error, status) {
                 if (error) {
                   logger.error(error);
                   return callback([error]);

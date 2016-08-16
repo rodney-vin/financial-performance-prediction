@@ -75,7 +75,7 @@ PAService.prototype = {
         logger.error(response.message);
         return callback(response.message);
       } else {
-        var errorMsg = `Undefined error occured, logContext: ${logContext}, error: ${error}, response: ${JSON.stringify(response)}, body: ${body}`;
+        var errorMsg = `Undefined error occured, logContext: ${JSON.stringify(logContext)}, error: ${error}, response: ${JSON.stringify(response)}, body: ${body}`;
         logger.error(errorMsg);
         return callback(errorMsg);
       }
@@ -306,14 +306,14 @@ with contextId=' + contextId + ', msg: ' + error);
   },
 
   // TODO should be these info given this way?
-  createJob: function (action, jobId, modelId, modelName, inputsNode, callback) {
+  createJob: function (action, jobId, modelId, modelName, tableName, inputsNode, callback) {
     logger.enter('createJob()');
 
     let url = this._constructUrl('jobs/' + jobId);
     let params = {
       headers: {'content-type': 'application/json'},
       url: url,
-      body: paHelper.getJobJson(action, modelId, modelName, inputsNode)
+      body: paHelper.getJobJson(action, modelId, modelName, tableName, inputsNode)
     };
     this.put(params, function (error, response, body) {
       if (error) {

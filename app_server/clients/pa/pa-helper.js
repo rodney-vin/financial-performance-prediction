@@ -11,9 +11,8 @@ let db1Host = config('dashDB:credentials:host');
 let db1Password = config('dashDB:credentials:password');
 let db1Port = config('dashDB:credentials:port');
 let db1Username = config('dashDB:credentials:username');
-let tableName = 'FORECAST_DATA';
 
-function getJobJson(action, modelId, modelName, inputsNode) {
+function getJobJson(action, modelId, modelName, tableName, inputsNode) {
   // TODO error handling
   let training = require('./training.json');
   return eval('`' + JSON.stringify(training) + '`');
