@@ -52,6 +52,7 @@ PAService.prototype = {
         }
       );
 
+
       if (typeof response === 'string') {
         try {
           response = JSON.parse(response);
@@ -60,8 +61,6 @@ PAService.prototype = {
             return callback(null, response);
         }
       }
-
-      logger.debug(`${logContext}: response status code is ${response.statusCode}`);
 
       if (!error && ((response.statusCode >= 200 && response.statusCode < 300) || response.flag)) {
         return callback(null, body);
