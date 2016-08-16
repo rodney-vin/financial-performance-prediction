@@ -62,7 +62,7 @@ class App extends React.Component {
         clearInterval(intervalId);
         console.log('Cannot establish connection with socket io server');
       }
-      socket = io('http://localhost:4000');
+      socket = io();
       socket.on('info', function (data) {
         ctx.refs["loader"].setInfo(data);
       });

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3622dde1eb5f29e192b0"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9a0d8b02af60e2966c24"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -39059,7 +39059,7 @@
 	          clearInterval(intervalId);
 	          console.log('Cannot establish connection with socket io server');
 	        }
-	        socket = io('http://localhost:4000');
+	        socket = io();
 	        socket.on('info', function (data) {
 	          ctx.refs["loader"].setInfo(data);
 	        });
