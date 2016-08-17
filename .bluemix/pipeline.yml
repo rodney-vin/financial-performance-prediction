@@ -52,5 +52,6 @@ stages:
       echo manifest.yml
       cat manifest.yml
       cf push "${CF_APP}"
+      cf restart "${CF_APP}"
       # View logs
       #cf logs "${CF_APP}" --recent
